@@ -1,5 +1,6 @@
 package studentCoursesBackup.driver;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import studentCoursesBackup.util.FileProcessor;
@@ -30,6 +31,7 @@ public class Driver {
 		Hashtable ht = new Hashtable();
 		Node orig_node = null;
 		
+		Enumeration collection;
 		
 		while((currLine = fprObj.readLine())!= null)
 		{
@@ -56,8 +58,17 @@ public class Driver {
 			
 		}
 		
+		//get all keys in hashtable
+		collection = ht.keys();
+		int number;
+		String courseValue;
+		while(collection.hasMoreElements()) {
+			number = (int) collection.nextElement();
+			courseValue=(String) ht.get(number);
+			orig_node = trbObj.insert(number, courseValue);
+	      }        
 		
-		//orig_node = trbObj.insert(bnumber, course);
+		trbObj.Display();
 	}
 
 }
