@@ -1,6 +1,6 @@
 package studentCoursesBackup.myTree;
 
-public class Node implements Cloneable,SubjectI {
+public class Node implements Cloneable,SubjectI,ObserverI {
 
 	 public int key;
 	 public String value;
@@ -34,4 +34,28 @@ public void registerObserver(Node o1, Node o2) {
 	refrArrayList[0]=o1;
 	refrArrayList[1]=o2;
 }
+
+public void removeObserver(Node o) {
+	// TODO Auto-generated method stub
+	refrArrayList[0]=null;
+	refrArrayList[1]=null;
+}
+
+public void notifyObservers(String course) {
+	// TODO Auto-generated method stub
+	Node T1;
+	//Node T2;
+	for (Node fs : refrArrayList)
+	{
+		T1 = fs;
+		T1.update(course);
+	}
+	
+}
+
+public void update(String updateCourse) {
+	// TODO Auto-generated method stub
+	this.value = updateCourse;
+}
+
 }

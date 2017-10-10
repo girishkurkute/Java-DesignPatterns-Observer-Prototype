@@ -99,9 +99,17 @@ public class Driver {
 			bnumber = Integer.parseInt(num);
 			course = arrayInfo[1];
 			orig_node=trbObj.delete(bnumber, course);
+			if(orig_node!=null)
+			{
+				orig_node.notifyObservers(orig_node.value);
+			}
 			
 		}
 		trbObj.Display();
+		System.out.println();
+		backup1trbObj.Display();
+		System.out.println();
+		backup2trbObj.Display();
 	}
 
 }
