@@ -42,7 +42,7 @@ public class Driver {
 		
 		while((currLine = fprObj.readLine())!= null)
 		{
-			int bnumber;
+			int bnumber,bnumberLength,length;
 			String num, course;
 			boolean check= false;
 			String [] arrayInfo = currLine.split(":");
@@ -51,20 +51,35 @@ public class Driver {
 			num = arrayInfo[0];
 			bnumber = Integer.parseInt(num);
 			course = arrayInfo[1];
-			check = ht.containsKey(bnumber);
-			if(check == false)
-			{
-				ht.put(bnumber, course);
-			}
-			else
-			{
-				String temp = (String) ht.get(bnumber);
-				temp  = temp + course;
-				ht.put(bnumber, temp);
-			}
+			bnumberLength = num.length();
+
 			
+			if(bnumberLength==4)
+			{
+			course = arrayInfo[1].toUpperCase();
+			length = course.length();
+			if(length==1)
+			{
+
+	
+				if(course.charAt(0) >= 'A' && course.charAt(0) <= 'K')
+				{
+			
+					check = ht.containsKey(bnumber);
+					if(check == false)
+					{
+						ht.put(bnumber, course);
+					}
+					else
+					{
+						String temp = (String) ht.get(bnumber);
+						temp  = temp + course;
+						ht.put(bnumber, temp);
+					}
+				}
+			}
 		}
-		
+		}
 		//get all keys in hashtable
 		collection = ht.keys();
 		int number;
@@ -90,20 +105,35 @@ public class Driver {
 		
 		while((currdelLine = fpDelObj.readLine())!= null)
 		{
-			int bnumber;
+			int bnumber,bnumberLength,length;
 			String num, course;
 			String [] arrayInfo = currdelLine.split(":");
 			//System.out.println(arrayInfo[0]);
 			//System.out.println(arrayInfo[1]);
 			num = arrayInfo[0];
+			
 			bnumber = Integer.parseInt(num);
 			course = arrayInfo[1];
-			orig_node=trbObj.delete(bnumber, course);
-			if(orig_node!=null)
-			{
-				orig_node.notifyObservers(orig_node.value);
-			}
+			bnumberLength = num.length();
+
 			
+			if(bnumberLength==4)
+			{
+			course = arrayInfo[1].toUpperCase();
+			length = course.length();
+			if(length==1)
+			{
+	
+				if(course.charAt(0) >= 'A' && course.charAt(0) <= 'K')
+				{						
+					orig_node=trbObj.delete(bnumber, course);
+					if(orig_node!=null)
+					{
+						orig_node.notifyObservers(orig_node.value);
+					}
+				}
+			 }
+			}
 		}
 		trbObj.Display();
 		System.out.println();
