@@ -30,9 +30,13 @@ public class Driver {
 		FileProcessor fprObj = new FileProcessor(inputfile);
 		FileProcessor fpDelObj = new FileProcessor(deletefile);
 		TreeBuilder trbObj = new TreeBuilder();
+		TreeBuilder backup1trbObj = new TreeBuilder();
+		TreeBuilder backup2trbObj = new TreeBuilder();
 		
 		Hashtable ht = new Hashtable();
 		Node orig_node = null;
+		Node backup_Node_1 = null;
+		Node backup_Node_2 = null;
 		
 		Enumeration collection;
 		
@@ -69,7 +73,17 @@ public class Driver {
 			number = (int) collection.nextElement();
 			courseValue=(String) ht.get(number);
 			orig_node = trbObj.insert(number, courseValue);
+			
+			backup_Node_1 = orig_node.clone();
+			backup_Node_2 = orig_node.clone();
+			
+			backup_Node_1 = backup1trbObj.insert(number, courseValue);
+			backup_Node_2 = backup2trbObj.insert(number, courseValue);
+			
+			orig_node.registerObserver(backup_Node_1,backup_Node_2);
 	      }        
+		
+		
 		
 		trbObj.Display();
 		
