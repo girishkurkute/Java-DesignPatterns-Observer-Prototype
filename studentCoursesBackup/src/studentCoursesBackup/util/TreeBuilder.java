@@ -6,6 +6,7 @@ public class TreeBuilder {
 
 	public Node root;
 	public Node currNode;
+	public Node currentDeleteNode;
 	
 	public TreeBuilder()
 	{
@@ -92,5 +93,104 @@ public class TreeBuilder {
 			
 			DisplayTreeValues(root.right);
 		}
+	}
+	
+	public Node delete(int key, String value)
+	{		
+		root = deleteNodeValue(root, key , value);
+		return currentDeleteNode;
+		
+	}
+	
+	
+	private Node deleteNodeValue(Node root, int key, String value) {
+		// TODO Auto-generated method stub
+		
+		Node tempRoot;		
+		//check if tree is empty
+		if(root == null)
+		{
+			return root;
+		}
+
+		if(key < root.key)
+		{
+			
+			root.left = deleteNodeValue(root.left, key , value);
+		}
+		else if(root.key < key)
+		{
+			root.right = deleteNodeValue(root.right, key , value);
+		}
+		else
+		{
+
+			
+			if(root.left == null)
+			{
+				if (root.right != null)
+				{
+
+					String temp = root.value;
+					if(!temp.isEmpty())
+					{
+						temp = temp.replace(value, "");
+						root.value = temp;
+					}
+
+					currentDeleteNode=root;
+					return root;
+				}
+
+				else
+				{
+
+					String temp = root.value;
+					if(!temp.isEmpty())
+					{
+						temp = temp.replace(value, "");
+						root.value = temp;
+					}
+					
+					currentDeleteNode=root;
+					return root;
+
+				}	
+			}
+			else if (root.right == null)
+			{
+
+				if (root.left == null)
+				{
+		
+					String temp = root.value;
+					if(!temp.isEmpty())
+					{
+						temp = temp.replace(value, "");
+					
+						root.value = temp;
+					}
+					
+					currentDeleteNode=root;
+					return root;
+				}
+				
+				else
+				{					
+					String temp = root.value;
+					if(!temp.isEmpty())
+					{
+						
+						temp = temp.replace(value, "");
+						root.value = temp;
+					}
+					currentDeleteNode=root;
+					return root;										
+				}	
+			}
+				
+		}		
+		
+		return root;
 	}
 }

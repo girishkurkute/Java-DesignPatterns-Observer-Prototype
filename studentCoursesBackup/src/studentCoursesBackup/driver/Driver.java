@@ -13,19 +13,22 @@ public class Driver {
 		// TODO Auto-generated method stub
 		
 		String inputfile,deletefile;
-		String currLine;
+		String currLine,currdelLine;
 		
-		if(args.length !=1)
+		if(args.length !=2)
 		{			
 			throw new RuntimeException("Please provide all arguments");
 		}
 		else
 		{
 			inputfile = args[0];
+			deletefile = args[1];
+			
 		}
 
 		
 		FileProcessor fprObj = new FileProcessor(inputfile);
+		FileProcessor fpDelObj = new FileProcessor(deletefile);
 		TreeBuilder trbObj = new TreeBuilder();
 		
 		Hashtable ht = new Hashtable();
@@ -68,6 +71,22 @@ public class Driver {
 			orig_node = trbObj.insert(number, courseValue);
 	      }        
 		
+		trbObj.Display();
+		
+		
+		while((currdelLine = fpDelObj.readLine())!= null)
+		{
+			int bnumber;
+			String num, course;
+			String [] arrayInfo = currdelLine.split(":");
+			//System.out.println(arrayInfo[0]);
+			//System.out.println(arrayInfo[1]);
+			num = arrayInfo[0];
+			bnumber = Integer.parseInt(num);
+			course = arrayInfo[1];
+			orig_node=trbObj.delete(bnumber, course);
+			
+		}
 		trbObj.Display();
 	}
 
