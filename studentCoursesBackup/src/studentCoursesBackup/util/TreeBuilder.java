@@ -1,5 +1,9 @@
 package studentCoursesBackup.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import studentCoursesBackup.myTree.Node;
 
 public class TreeBuilder {
@@ -7,6 +11,7 @@ public class TreeBuilder {
 	public Node root;
 	public Node currNode;
 	public Node currentDeleteNode;
+	public ArrayList<String> originalTreeDataValues = new ArrayList<String>();
 	
 	public TreeBuilder()
 	{
@@ -192,5 +197,28 @@ public class TreeBuilder {
 		}		
 		
 		return root;
+	}
+	
+	public void printNodes(Results relt,Node root) throws IOException {
+		// TODO Auto-generated method stub
+		getTreeValues(root);
+		relt.writeToFile(originalTreeDataValues);
+	}
+
+	public void getTreeValues(Node root)
+	{
+		int tempKey;
+		String tempCourseValue,temp;
+		
+		if(root != null)
+		{
+			getTreeValues(root.left);
+			tempKey = root.key;
+			tempCourseValue=root.value.toString();
+			temp = Integer.toString(tempKey) +":"+ tempCourseValue;
+			
+			originalTreeDataValues.add(temp);
+			getTreeValues(root.right);
+		}		
 	}
 }

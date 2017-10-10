@@ -1,5 +1,5 @@
 package studentCoursesBackup.util;
 
-public class StdoutDisplayInterface {
-
+public interface StdoutDisplayInterface {
+	public void writeToStdout();
 }

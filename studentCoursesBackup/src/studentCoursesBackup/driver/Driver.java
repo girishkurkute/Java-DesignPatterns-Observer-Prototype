@@ -6,16 +6,17 @@ import java.util.Hashtable;
 import studentCoursesBackup.util.FileProcessor;
 import studentCoursesBackup.myTree.Node;
 import studentCoursesBackup.util.TreeBuilder;
+import studentCoursesBackup.util.Results;
 
 public class Driver {
 
 	public static void main(String[] args)throws Exception {
 		// TODO Auto-generated method stub
 		
-		String inputfile,deletefile;
+		String inputfile,deletefile,outputfile_1,outputfile_2,outputfile_3;
 		String currLine,currdelLine;
 		
-		if(args.length !=2)
+		if(args.length !=5)
 		{			
 			throw new RuntimeException("Please provide all arguments");
 		}
@@ -23,7 +24,9 @@ public class Driver {
 		{
 			inputfile = args[0];
 			deletefile = args[1];
-			
+			outputfile_1 = args[2];
+			outputfile_2 = args[3];
+			outputfile_3 = args[4];
 		}
 
 		
@@ -32,6 +35,9 @@ public class Driver {
 		TreeBuilder trbObj = new TreeBuilder();
 		TreeBuilder backup1trbObj = new TreeBuilder();
 		TreeBuilder backup2trbObj = new TreeBuilder();
+		Results reslt1Obj = new Results(outputfile_1);
+		Results reslt2Obj = new Results(outputfile_2);
+		Results reslt3Obj = new Results(outputfile_3);
 		
 		Hashtable ht = new Hashtable();
 		Node orig_node = null;
@@ -135,6 +141,11 @@ public class Driver {
 			 }
 			}
 		}
+		
+		trbObj.printNodes(reslt1Obj,trbObj.root);
+		backup1trbObj.printNodes(reslt2Obj,backup1trbObj.root);
+		backup2trbObj.printNodes(reslt3Obj,backup2trbObj.root);
+		
 		trbObj.Display();
 		System.out.println();
 		backup1trbObj.Display();
