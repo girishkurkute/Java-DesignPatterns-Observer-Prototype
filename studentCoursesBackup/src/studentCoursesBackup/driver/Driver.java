@@ -9,7 +9,12 @@ import studentCoursesBackup.util.TreeBuilder;
 import studentCoursesBackup.util.Results;
 
 public class Driver {
-
+	/**
+	 * Execution of program starts with Main.Input and delete file reading and call to insert or delete node to/from tree is done in this function 
+	 * @param args
+	 * @throws Exception
+	 * returns nothing
+	 */
 	public static void main(String[] args)throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -18,10 +23,11 @@ public class Driver {
 		
 		if(args.length !=5)
 		{			
-			throw new RuntimeException("Please provide all arguments");
+			throw new RuntimeException("Please provide 5 arguments");
 		}
 		else
 		{
+			////Assigning text file names
 			inputfile = args[0];
 			deletefile = args[1];
 			outputfile_1 = args[2];
@@ -29,7 +35,7 @@ public class Driver {
 			outputfile_3 = args[4];
 		}
 
-		
+		//Object creation
 		FileProcessor fprObj = new FileProcessor(inputfile);
 		FileProcessor fpDelObj = new FileProcessor(deletefile);
 		TreeBuilder trbObj = new TreeBuilder();
@@ -46,6 +52,7 @@ public class Driver {
 		
 		Enumeration collection;
 		
+		//reading input file
 		while((currLine = fprObj.readLine())!= null)
 		{
 			int bnumber,bnumberLength,length;
@@ -59,18 +66,19 @@ public class Driver {
 			course = arrayInfo[1];
 			bnumberLength = num.length();
 
-			
+			//checking number of digits in bnumber
 			if(bnumberLength==4)
 			{
 			course = arrayInfo[1].toUpperCase();
 			length = course.length();
+			//only single course can be added at once
 			if(length==1)
 			{
 
-	
+				//course value should be within 'A' to 'K'
 				if(course.charAt(0) >= 'A' && course.charAt(0) <= 'K')
 				{
-			
+					//storing all bnumbers and courses into hashtable
 					check = ht.containsKey(bnumber);
 					if(check == false)
 					{
@@ -93,45 +101,50 @@ public class Driver {
 		while(collection.hasMoreElements()) {
 			number = (int) collection.nextElement();
 			courseValue=(String) ht.get(number);
+			//inserting Bnumber and course into BST
 			orig_node = trbObj.insert(number, courseValue);
 			
+			//creating clone of node of original tree 
 			backup_Node_1 = orig_node.clone();
 			backup_Node_2 = orig_node.clone();
 			
+			//creating tree for backup nodes
 			backup_Node_1 = backup1trbObj.insert(number, courseValue);
 			backup_Node_2 = backup2trbObj.insert(number, courseValue);
 			
+			//registering backup nodes as a observer
 			orig_node.registerObserver(backup_Node_1,backup_Node_2);
 	      }        
 		
 		
 		
-		trbObj.Display();
 		
 		
+		//reading delete file
 		while((currdelLine = fpDelObj.readLine())!= null)
 		{
 			int bnumber,bnumberLength,length;
 			String num, course;
 			String [] arrayInfo = currdelLine.split(":");
-			//System.out.println(arrayInfo[0]);
-			//System.out.println(arrayInfo[1]);
+
 			num = arrayInfo[0];
 			
 			bnumber = Integer.parseInt(num);
 			course = arrayInfo[1];
 			bnumberLength = num.length();
 
-			
+			//checking number of digits in bnumber
 			if(bnumberLength==4)
 			{
 			course = arrayInfo[1].toUpperCase();
 			length = course.length();
+			//only single course can be added at once
 			if(length==1)
 			{
-	
+				//course value should be within 'A' to 'K'
 				if(course.charAt(0) >= 'A' && course.charAt(0) <= 'K')
 				{						
+					//deleting Bnumber and course into tree
 					orig_node=trbObj.delete(bnumber, course);
 					if(orig_node!=null)
 					{
@@ -142,15 +155,12 @@ public class Driver {
 			}
 		}
 		
+		//calling method to print tree values in ascending order into output file
 		trbObj.printNodes(reslt1Obj,trbObj.root);
 		backup1trbObj.printNodes(reslt2Obj,backup1trbObj.root);
 		backup2trbObj.printNodes(reslt3Obj,backup2trbObj.root);
 		
-		trbObj.Display();
-		System.out.println();
-		backup1trbObj.Display();
-		System.out.println();
-		backup2trbObj.Display();
+		
 	}
 
 }
